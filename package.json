@@ -1,15 +1,25 @@
 {
   "name": "file-encryptor",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Secure file encryption and decryption tool",
+  "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc && pnpm build:client",
-    "build:client": "esbuild src/public/js/app.ts --bundle --minify --outfile=dist/public/js/app.js && esbuild src/public/js/crypto.ts --bundle --minify --outfile=dist/public/js/crypto.js",
-    "start": "node dist/server.js"
+    "dev": "pnpm build && node dist/server.js",
+    "build": "pnpm clean && pnpm build:server && pnpm build:client && pnpm copy:static",
+    "build:server": "tsc",
+    "build:client": "esbuild src/public/modules/app.ts --bundle --minify --target=es2020 --tree-shaking=true --format=esm --outfile=dist/public/modules/app.js && esbuild src/public/sw.ts --bundle --minify --target=es2020 --tree-shaking=true --format=esm --outfile=dist/public/sw.js",
+    "copy:static": "mkdir -p dist/public && cp -r src/public/index.html src/public/manifest.json src/public/icons src/public/screenshots dist/public/",
+    "start": "node dist/server.js",
+    "generate-icons": "tsx generate-icons.ts",
+    "clean": "rm -rf dist"
   },
-  "keywords": [],
+  "keywords": [
+    "encryption",
+    "file",
+    "security",
+    "crypto",
+    "pwa"
+  ],
   "author": "",
   "license": "ISC",
   "packageManager": "pnpm@10.14.0",
