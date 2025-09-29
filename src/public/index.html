@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chiffrement de Fichiers - AES-256</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Application sécurisée de chiffrement et déchiffrement de fichiers utilisant AES-256-GCM">
+    <meta name="theme-color" content="#111827">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Apple Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FileEncrypt">
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+
+    <!-- Microsoft Meta Tags -->
+    <meta name="msapplication-TileColor" content="#111827">
+    <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-72x72.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-72x72.png">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Chiffrement de Fichiers - AES-256">
+    <meta property="og:description" content="Application sécurisée de chiffrement et déchiffrement de fichiers">
+    <meta property="og:image" content="/icons/icon-512x512.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+      <h1 class="text-4xl font-bold text-center mb-8">
+        🔐 Chiffrement de Fichiers
+      </h1>
+
+      <div class="bg-gray-800 rounded-lg shadow-xl p-6 mb-6">
+        <div class="mb-6">
+          <label for="password" class="block text-sm font-medium mb-2"
+            >Mot de passe</label
+          >
+          <input
+            type="password"
+            id="password"
+            placeholder="Entrez votre mot de passe..."
+            class="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+          />
+        </div>
+
+        <div
+          id="dropZone"
+          class="border-2 border-dashed border-gray-600 rounded-lg p-12 text-center cursor-pointer hover:border-blue-500 transition-colors"
+        >
+          <svg
+            class="mx-auto h-16 w-16 text-gray-400 mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+            />
+          </svg>
+          <p class="text-gray-400 mb-2">Glissez-déposez vos fichiers ici</p>
+          <p class="text-sm text-gray-500">ou</p>
+          <input type="file" id="fileInput" class="hidden" multiple />
+          <button
+            id="selectFiles"
+            class="mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors"
+          >
+            Sélectionner des fichiers
+          </button>
+        </div>
+
+        <div id="fileList" class="mt-6 space-y-2 hidden">
+          <h3 class="text-lg font-semibold mb-2">Fichiers sélectionnés :</h3>
+          <div id="filesContainer"></div>
+        </div>
+
+        <div class="mt-6 flex gap-4">
+          <button
+            id="encryptBtn"
+            class="flex-1 px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-medium transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
+            disabled
+          >
+            🔒 Chiffrer
+          </button>
+          <button
+            id="decryptBtn"
+            class="flex-1 px-6 py-3 bg-red-600 hover:bg-red-700 rounded-lg font-medium transition-colors disabled:bg-gray-600 disabled:cursor-not-allowed"
+            disabled
+          >
+            🔓 Déchiffrer
+          </button>
+        </div>
+
+        <div id="progressBar" class="mt-6 hidden">
+          <div class="w-full bg-gray-700 rounded-full h-3">
+            <div
+              id="progressBarFill"
+              class="bg-blue-600 h-3 rounded-full transition-all duration-300"
+              style="width: 0%"
+            ></div>
+          </div>
+          <p id="progressText" class="text-sm text-gray-400 mt-2 text-center">
+            0%
+          </p>
+        </div>
+
+        <div id="statusMessage" class="mt-6 p-4 rounded-lg hidden"></div>
+      </div>
+
+      <div class="text-center text-gray-500 text-sm">
+        <p>
+          💡 Vos fichiers sont traités localement. Aucune donnée n'est envoyée
+          au serveur.
+        </p>
+        <p class="mt-1">Chiffrement AES-256-GCM avec PBKDF2</p>
+      </div>
+    </div>
+
+    <script src="/js/app.js"></script>
+  </body>
+</html>
